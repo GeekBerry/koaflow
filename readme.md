@@ -1,7 +1,7 @@
-# Koaok
+# Koaflow
 
-koa app extend.  
-对 koa 进行改造和封装
+koa app extend. change koa router to flow by hide and auto call `next()`.   
+对 koa 进行改造和封装, 通过对 koa router 之`next()` 的自动调用将其进行隐藏, 实现流式模式.
 
 # Installation
 `npm install koaflow`
@@ -19,10 +19,10 @@ router.get('/',
     return { num: 100 };
   },
 
-  async ({ key }) => {
+  async ({ num }) => {
     // await xxx
-    if (key !== 100) {
-      throw new App.Error('key should be 100', 500);
+    if (num !== 100) {
+      throw new App.Error('num should be 100', 500);
     }
 
     return { state: 'ok' };

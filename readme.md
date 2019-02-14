@@ -4,11 +4,11 @@ koa app extend.
 对 koa 进行改造和封装
 
 # Installation
-`npm install koaok`
+`npm install koaflow`
 
 # Usage
 ```javascript
-const App = require('koaok');
+const App = require('koaflow');
 
 const app = new App();
 

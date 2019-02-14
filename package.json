@@ -1,32 +1,35 @@
 {
-  "name": "koaok",
+  "name": "koaflow",
   "version": "0.0.1",
   "description": "koa app extend",
   "author": "geekberry@qq.com",
   "license": "MIT",
   "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GeekBerry/koaok.git"
-  },
   "keywords": [
     "koa",
     "web",
     "api",
     "router"
   ],
-  "bugs": {
-    "url": "https://github.com/GeekBerry/koaok/issues"
-  },
-  "homepage": "https://github.com/GeekBerry/koaok#readme",
-  "dependencies": {
-    "koa": "^2.7.0",
-    "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
-  },
   "files": [
     "lib",
     "index.js",
     "readme.md"
-  ]
+  ],
+  "directories": {
+    "lib": "lib"
+  },
+  "homepage": "https://github.com/GeekBerry/koaflow#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GeekBerry/koaflow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/GeekBerry/koaflow/issues"
+  },
+  "dependencies": {
+    "koa": "^2.7.0",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
 }

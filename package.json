@@ -1,6 +1,6 @@
 {
   "name": "koaflow",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "koa app extend",
   "author": "geekberry@qq.com",
   "license": "MIT",
@@ -14,11 +14,9 @@
   "files": [
     "lib",
     "index.js",
+    "logger.js",
     "readme.md"
   ],
-  "directories": {
-    "lib": "lib"
-  },
   "homepage": "https://github.com/GeekBerry/koaflow#readme",
   "repository": {
     "type": "git",

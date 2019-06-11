@@ -15,14 +15,15 @@ const app = new App();
 const router = new App.Router();
 
 router.get('/',
-  (ctx) => {
+  function (ctx) {
+    ctx.assert(ctx === this); // in not lambda func, 'this' is 'ctx'
     return { num: 100 };
   },
 
-  async ({ num }) => {
+  async function ({ num }) {
     // await xxx
     if (num !== 100) {
-      throw new App.Error('num should be 100', 500);
+      this.throw(500, 'num should be 100')
     }
 
     return { state: 'ok' };

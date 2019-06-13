@@ -8,31 +8,36 @@ koa app extend. change koa router to flow by hide and auto call `next()`.
 
 # Usage
 ```javascript
-const App = require('koaflow');
+const Koaflow = require('koaflow');
 
-const app = new App();
+function logic() {
+  console.log(this); // ctx
+}
 
-const router = new App.Router();
+const app = new Koaflow({
+  ioLogger: console,
+});
 
-router.get('/',
+// add some tools
+app.ctx.foo = () => console.log('i am foo');
+
+app.router.use((ctx, next) => {
+  console.log('router other middleware still koa type');
+  return next();
+});
+
+app.router.get('/',
   function (ctx) {
-    ctx.assert(ctx === this); // in not lambda func, 'this' is 'ctx'
-    return { num: 100 };
+    ctx.foo();
+    ctx.assert(ctx === this, 'this is ctx in router middleware');
+
+    this.throw(560, 'asdasd', { a: 100 }); // i am foo
+    return true;
   },
 
-  async function ({ num }) {
-    // await xxx
-    if (num !== 100) {
-      this.throw(500, 'num should be 100')
-    }
-
-    return { state: 'ok' };
-  },
+  logic, // bind ctx to logic !!!
 );
 
-
-app.root.get('/', ctx=>{status:'ok'});
-app.root.subRouter('/v1', router);
-
 app.listen(3000);
+console.log('app listen 3000');
 ```

@@ -1,19 +1,31 @@
-const model = require('./model');
+class Logic {
+  constructor(app) {
+    this.app = app;
+  }
 
-function create({ name, age }) {
-  return model.create({ name, age });
+  create({ name, age }) {
+    const {
+      app: { model },
+    } = this;
+
+    return model.create({ name, age });
+  }
+
+  query(id) {
+    const {
+      app: { model },
+    } = this;
+
+    return model.findById(id);
+  }
+
+  list({ limit, offset }) {
+    const {
+      app: { model },
+    } = this;
+
+    return model.find({ limit, offset });
+  }
 }
 
-function query(id) {
-  return model.findById(id);
-}
-
-function list({ limit, offset }) {
-  return model.find({ limit, offset });
-}
-
-module.exports = {
-  create,
-  query,
-  list,
-};
+module.exports = app => new Logic(app);

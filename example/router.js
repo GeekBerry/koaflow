@@ -4,20 +4,20 @@ const Koaflow = require('../');
 const router = new Koaflow.Router();
 
 router.post('/',
-  // function (ctx) {
-  //   ctx.assert(ctx === this); // "this" is "ctx"
-  // },
+  function(ctx) {
+    ctx.assert(ctx === this); // "this" is "ctx"
+  },
 
   parameter({
     name: { path: 'request.body', type: 'str', required: true },
     age: { path: 'request.body', type: 'integer', 'bigger than 0': v => v > 0 },
   }),
 
-  function ({ name, age }) {
-    return this.logic.create({ name, age });
+  function({ name, age }) {
+    return this.app.logic.create({ name, age });
   },
 
-  function () {
+  function() {
     this.status = 201; // created
   },
 
@@ -32,11 +32,11 @@ router.get('/:id',
     id: { path: 'params', type: 'int', required: true },
   }),
 
-  function ({ id }) {
-    return this.logic.query(id);
+  function({ id }) {
+    return this.app.logic.query(id);
   },
 
-  function (user) {
+  function(user) {
     if (user === null) {
       this.throw(404, 'not found', { errcode: 10404, errmsg: 'can not find user by id' });
     }
@@ -54,9 +54,9 @@ router.get('/',
     limit: { path: 'query', type: TYPES.int, default: 10 },
   }),
 
-  function ({ page, limit }) {
+  function({ page, limit }) {
     const offset = (page - 1) * limit;
-    return this.logic.list({ limit, offset });
+    return this.app.logic.list({ limit, offset });
   },
 
   typePicker([
@@ -65,6 +65,14 @@ router.get('/',
       name: String,
     },
   ]),
+);
+
+const TestError = Koaflow.Error.extend('TEST', { code: 9999 });
+
+router.delete('/:id',
+  function() {
+    throw new TestError('not allowed delete');
+  },
 );
 
 module.exports = router;

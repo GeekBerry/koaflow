@@ -2248,8 +2248,8 @@ kleur@^3.0.2:
 
 koa-bodyparser@^4.2.1:
   version "4.2.1"
-  resolved "https://registry.yarnpkg.com/koa-bodyparser/-/koa-bodyparser-4.2.1.tgz#4d7dacb5e6db1106649b595d9e5ccb158b6f3b29"
-  integrity sha512-UIjPAlMZfNYDDe+4zBaOAUKYqkwAGcIU6r2ARf1UOXPAlfennQys5IiShaVeNf7KkVBlf88f2LeLvBFvKylttw==
+  resolved "https://registry.npm.taobao.org/koa-bodyparser/download/koa-bodyparser-4.2.1.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fkoa-bodyparser%2Fdownload%2Fkoa-bodyparser-4.2.1.tgz#4d7dacb5e6db1106649b595d9e5ccb158b6f3b29"
+  integrity sha1-TX2stebbEQZkm1ldnlzLFYtvOyk=
   dependencies:
     co-body "^6.0.0"
     copy-to "^2.0.1"
@@ -2279,14 +2279,6 @@ koa-is-json@^1.0.0:
   resolved "https://registry.yarnpkg.com/koa-is-json/-/koa-is-json-1.0.0.tgz#273c07edcdcb8df6a2c1ab7d59ee76491451ec14"
   integrity sha1-JzwH7c3Ljfaiwat9We52SRRR7BQ=
 
-koa-json-error@^3.1.2:
-  version "3.1.2"
-  resolved "https://registry.yarnpkg.com/koa-json-error/-/koa-json-error-3.1.2.tgz#acad750c6739cb12cc4ea6c25f224d59b765abfe"
-  integrity sha1-rK11DGc5yxLMTqbCXyJNWbdlq/4=
-  dependencies:
-    lodash.compact "^3.0.1"
-    lodash.curry "^4.1.1"
-
 koa-router@^7.4.0:
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/koa-router/-/koa-router-7.4.0.tgz#aee1f7adc02d5cb31d7d67465c9eacc825e8c5e0"
@@ -2299,10 +2291,10 @@ koa-router@^7.4.0:
     path-to-regexp "^1.1.1"
     urijs "^1.19.0"
 
-koa@^2.7.0:
-  version "2.7.0"
-  resolved "https://registry.yarnpkg.com/koa/-/koa-2.7.0.tgz#7e00843506942b9d82c6cc33749f657c6e5e7adf"
-  integrity sha512-7ojD05s2Q+hFudF8tDLZ1CpCdVZw8JQELWSkcfG9bdtoTDzMmkRF6BQBU7JzIzCCOY3xd3tftiy/loHBUYaY2Q==
+koa@^2.8.1:
+  version "2.8.1"
+  resolved "https://registry.npm.taobao.org/koa/download/koa-2.8.1.tgz#98e13b267ab8a1868f015a4b41b5a52e31457ce5"
+  integrity sha1-mOE7Jnq4oYaPAVpLQbWlLjFFfOU=
   dependencies:
     accepts "^1.3.5"
     cache-content-type "^1.0.0"
@@ -2371,16 +2363,6 @@ locate-path@^3.0.0:
   dependencies:
     p-locate "^3.0.0"
     path-exists "^3.0.0"
-
-lodash.compact@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/lodash.compact/-/lodash.compact-3.0.1.tgz#540ce3837745975807471e16b4a2ba21e7256ca5"
-  integrity sha1-VAzjg3dFl1gHRx4WtKK6IeclbKU=
-
-lodash.curry@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/lodash.curry/-/lodash.curry-4.1.1.tgz#248e36072ede906501d75966200a86dab8b23170"
-  integrity sha1-JI42By7ekGUB11lmIAqG2riyMXA=
 
 lodash.sortby@^4.7.0:
   version "4.7.0"
@@ -3546,10 +3528,10 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.yarnpkg.com/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-superagent@^5.0.6:
+superagent@^5.1.0:
   version "5.1.0"
-  resolved "https://registry.yarnpkg.com/superagent/-/superagent-5.1.0.tgz#9ce4f38bee64d65a56166423b573222fa1b8f041"
-  integrity sha512-7V6JVx5N+eTL1MMqRBX0v0bG04UjrjAvvZJTF/VDH/SH2GjSLqlrcYepFlpTrXpm37aSY6h3GGVWGxXl/98TKA==
+  resolved "https://registry.npm.taobao.org/superagent/download/superagent-5.1.0.tgz#9ce4f38bee64d65a56166423b573222fa1b8f041"
+  integrity sha1-nOTzi+5k1lpWFmQjtXMiL6G48EE=
   dependencies:
     component-emitter "^1.3.0"
     cookiejar "^2.1.2"
@@ -3784,10 +3766,10 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "^3.0.0"
     spdx-expression-parse "^3.0.0"
 
-validator-picker@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/validator-picker/-/validator-picker-0.2.1.tgz#95302ca88b28af3a7046ca25c9fb953e27d4d456"
-  integrity sha512-Vtq9q3vJmbmdK9hkiwJl+Kj24Gh29/4bpJmt9xSG8PBdDJ/Z61NOpybVHhUpdo+ClkXW4J/N086Rry9BJFNTbw==
+validator-picker@^0.2.8:
+  version "0.2.8"
+  resolved "https://registry.npm.taobao.org/validator-picker/download/validator-picker-0.2.8.tgz#30a84be7d0d8aba6332d5c3fba7425f0cd1d3aea"
+  integrity sha1-MKhL59DYq6YzLVw/unQl8M0dOuo=
   dependencies:
     lodash "^4.17.11"
     validator "^10.11.0"

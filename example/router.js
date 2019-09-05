@@ -3,7 +3,7 @@ const Koaflow = require('../');
 
 const router = new Koaflow.Router();
 
-router.post('/',
+router.postFlow('/',
   function(ctx) {
     ctx.assert(ctx === this); // "this" is "ctx"
   },
@@ -27,7 +27,7 @@ router.post('/',
   }),
 );
 
-router.get('/:id',
+router.getFlow('/:id',
   parameter({
     id: { path: 'params', type: 'int', required: true },
   }),
@@ -48,7 +48,7 @@ router.get('/:id',
   }),
 );
 
-router.get('/',
+router.getFlow('/',
   parameter({
     page: { path: 'query', type: TYPES.int, default: 1 },
     limit: { path: 'query', type: TYPES.int, default: 10 },
@@ -69,8 +69,9 @@ router.get('/',
 
 const TestError = Koaflow.Error.extend('TEST', { code: 9999 });
 
-router.delete('/:id',
-  function() {
+router.deleteFlow('/:id',
+  function(ctx) {
+    ctx.logger.info('NOT_ALLOWED_DELETE');
     throw new TestError('not allowed delete');
   },
 );

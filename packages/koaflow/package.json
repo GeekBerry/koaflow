@@ -1,0 +1,26 @@
+{
+  "name": "koaflow",
+  "version": "0.2.1",
+  "description": "koa app extend",
+  "author": "geekberry@qq.com",
+  "license": "MIT",
+  "main": "index.js",
+  "keywords": [
+    "koa",
+    "web",
+    "api",
+    "router"
+  ],
+  "files": [
+    "lib",
+    "middleware",
+    "index.js",
+    "readme.md",
+    "yarn.lock"
+  ],
+  "dependencies": {
+    "koa": "^2.8.1",
+    "koa-bodyparser": "^4.2.1",
+    "koa-router": "^7.4.0"
+  }
+}

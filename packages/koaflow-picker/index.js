@@ -1,6 +1,6 @@
 const lodash = require('lodash');
 
-PickerError = class extends Error {};
+class PickerError extends Error {}
 
 /**
  * 将 schema 编译成挑选函数

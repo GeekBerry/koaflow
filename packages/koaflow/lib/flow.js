@@ -4,7 +4,7 @@ function flow(...functions) {
     let ret = undefined;
 
     for (const func of functions) {
-      ret = await func.call(this, arg); // "this" bind by flow caller
+      ret = await func.call(ctx, arg);
       if (ret !== undefined) {
         arg = ret;
       }

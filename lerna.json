@@ -1,5 +1,15 @@
 {
-  "version": "0.2.1",
+  "version": "independent",
+  "npmClient": "yarn",
+  "command": {
+    "init": {
+      "exact": true
+    },
+    "publish": {
+      "exact": true,
+      "skipGit": true
+    }
+  },
   "packages": [
     "packages/*"
   ]

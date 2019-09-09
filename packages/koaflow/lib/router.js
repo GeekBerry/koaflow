@@ -1,5 +1,5 @@
 const KoaRouter = require('koa-router');
-const flow = require('../middleware/flow');
+const flow = require('./flow');
 
 /**
  * AppRouter
@@ -9,7 +9,7 @@ class AppRouter extends KoaRouter {
     return (path, ...functions) => {
       function middleware(ctx, next) {
         // set last (!undefined) return value to body
-        const bindFlow = flow.call(ctx, ...functions, ret => {ctx.body = ret;});
+        const bindFlow = flow(...functions, ret => {ctx.body = ret;});
         return bindFlow(ctx, next);
       }
 
@@ -20,7 +20,7 @@ class AppRouter extends KoaRouter {
   constructor(...args) {
     super(...args);
 
-    // methods in this.methods, list them for IDEA friendly
+    // methods name from "this.methods", list them for IDEA friendly
     this.allFlow = this._wrapAsFlow(this.all);
     this.headFlow = this._wrapAsFlow(this.head);
     this.optionsFlow = this._wrapAsFlow(this.options);

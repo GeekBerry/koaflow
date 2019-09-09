@@ -1,25 +1,46 @@
 const Koa = require('koa');
 const koaBodyParser = require('koa-bodyparser');
 const AppRouter = require('./router');
-const flow = require('../middleware/flow');
 
 /**
  * App
  */
 class App extends Koa {
-  constructor(options) {
+  constructor({
+    configPath = './config',
+    ...options
+  } = {}) {
     super(options);
     this._httpServer = null;
+
     this.router = new AppRouter();
+    this.logger = console;
 
     this.use(koaBodyParser({ enableTypes: ['json', 'form', 'text'] }));
   }
 
-  useFlow(...functions) {
-    return this.use(flow.call(this, ...functions));
+  then(func) {
+    this.use(
+      async (ctx, next) => {
+        await func.call(ctx, ctx);
+        await next();
+      },
+    );
   }
 
-  use(func, prepend = false) {
+  catch(func) {
+    this.use(
+      async (ctx, next) => {
+        try {
+          await next();
+        } catch (e) {
+          await func.call(ctx, e);
+        }
+      },
+    );
+  }
+
+  use(func, { prepend = false } = {}) {
     super.use(func);
     if (prepend) {
       func = this.middleware.pop();

@@ -1,15 +1,15 @@
 {
-  "name": "koaflow-picker",
-  "version": "0.2.1",
+  "name": "koaflow-uitl",
+  "version": "0.0.1",
   "main": "index.js",
   "license": "MIT",
   "files": [
+    "lib",
     "index.js",
     "readme.md",
     "yarn.lock"
   ],
   "dependencies": {
-    "koaflow-test": "^0.0.1",
     "lodash": "^4.17.15"
   },
   "devDependencies": {

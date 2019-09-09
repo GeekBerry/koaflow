@@ -3,14 +3,13 @@
   "license": "MIT",
   "main": "./packages/koaflow/index.js",
   "homepage": "https://github.com/GeekBerry/koaflow#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GeekBerry/koaflow.git"
-  },
+  "repository": "git+https://github.com/GeekBerry/koaflow.git#dev",
   "bugs": {
     "url": "https://github.com/GeekBerry/koaflow/issues"
   },
   "devDependencies": {
     "lerna": "^3.16.4"
-  }
+  },
+  "name": "kowflow",
+  "version": "0.0.0"
 }

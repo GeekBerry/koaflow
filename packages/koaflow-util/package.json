@@ -1,6 +1,6 @@
 {
-  "name": "koaflow-uitl",
-  "version": "0.0.2",
+  "name": "koaflow-util",
+  "version": "0.0.3",
   "main": "index.js",
   "license": "MIT",
   "files": [

@@ -1,6 +1,6 @@
 {
   "name": "koaflow",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "koa app extend",
   "author": "geekberry@qq.com",
   "license": "MIT",
@@ -28,7 +28,7 @@
     "koaflow-picker": "0.2.2",
     "koaflow-test": "0.0.2",
     "koaflow-type": "0.2.2",
-    "koaflow-util": "0.0.3",
+    "koaflow-util": "0.0.4",
     "supertest": "^4.0.2"
   }
 }

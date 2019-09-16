@@ -5,6 +5,7 @@
   "license": "MIT",
   "files": [
     "index.js",
+    "assert.js",
     "readme.md",
     "yarn.lock"
   ],

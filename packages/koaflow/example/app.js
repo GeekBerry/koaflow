@@ -1,8 +1,8 @@
 process.env.NODE_ENV = 'prod';
 
 const App = require('../index'); // koaflow
-const { LogicError, loadConfig, lazyRequire } = require('koaflow-util');
 const requestLogger = require('koaflow-middleware/requestLogger');
+const { LogicError, loadConfig, lazyRequire } = require('koaflow-util');
 
 // ============================================================================
 const app = new App();

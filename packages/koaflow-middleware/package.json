@@ -4,13 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "files": [
+    "lib",
     "index.js",
     "readme.md",
     "yarn.lock"
   ],
-  "dependencies": {
-    "jest": "^24.9.0"
-  },
   "devDependencies": {
     "jest": "^24.9.0"
   }

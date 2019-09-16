@@ -9,9 +9,6 @@
     "readme.md",
     "yarn.lock"
   ],
-  "dependencies": {
-    "lodash": "^4.17.15"
-  },
   "devDependencies": {
     "jest": "^24.9.0"
   }

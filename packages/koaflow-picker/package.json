@@ -1,6 +1,6 @@
 {
   "name": "koaflow-picker",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -12,7 +12,7 @@
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "koaflow-test": "0.0.2",
-    "jest": "^24.9.0"
+    "jest": "^24.9.0",
+    "koaflow-test": "0.0.3"
   }
 }

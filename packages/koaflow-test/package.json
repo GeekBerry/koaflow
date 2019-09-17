@@ -10,6 +10,8 @@
     "yarn.lock"
   ],
   "dependencies": {
-    "lodash": "^4.17.15"
+    "koaflow-util": "^0.0.5",
+    "lodash": "^4.17.15",
+    "supertest": "^4.0.2"
   }
 }

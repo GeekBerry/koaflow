@@ -6,10 +6,7 @@ const AppRouter = require('./router');
  * App
  */
 class App extends Koa {
-  constructor({
-    configPath = './config',
-    ...options
-  } = {}) {
+  constructor(options) {
     super(options);
     this._httpServer = null;
 

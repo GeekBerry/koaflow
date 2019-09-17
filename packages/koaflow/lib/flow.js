@@ -4,13 +4,12 @@ function flow(...functions) {
     let ret = undefined;
 
     for (const func of functions) {
-      ret = await func.call(ctx, arg);
+      ret = await func.call(ctx, arg, next);
       if (ret !== undefined) {
         arg = ret;
       }
     }
 
-    await next();
     return ret;
   };
 }

@@ -1,6 +1,6 @@
 const path = require('path');
 
-function loadConfig(dir = '.') {
+function loadConfig(dir = '.', env) {
   function load(name) {
     try {
       return require(path.resolve(dir, name));
@@ -9,7 +9,7 @@ function loadConfig(dir = '.') {
     }
   }
 
-  const env = (process.env.NODE_ENV || '').toLowerCase();
+  env = env || (process.env.NODE_ENV || '').toLowerCase();
   return Object.assign({}, load(''), load(env), load('local'));
 }
 

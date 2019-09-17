@@ -1,6 +1,6 @@
 {
   "name": "koaflow-type",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -18,6 +18,6 @@
   },
   "devDependencies": {
     "jest": "^24.9.0",
-    "koaflow-test": "0.0.3"
+    "koaflow-test": "0.0.4"
   }
 }

@@ -20,10 +20,6 @@ const type = new Proxy(any, {
   },
 
   set(self, key, value) {
-    if (key in self) {
-      throw new Type.TypeError(`already have type named "${key}"`);
-    }
-
     if (!(value instanceof Type)) {
       throw new Type.TypeError('value must be instanceof Type');
     }

@@ -7,6 +7,7 @@ function pick(obj, list) {
 }
 
 function requestLogger({
+  logger = console,
   request = ['timestamp', 'method', 'url'],
   response = ['status', 'length', 'duration'],
   level = 'info',
@@ -29,11 +30,7 @@ function requestLogger({
       break;
   }
 
-  return async function(ctx, next) {
-    const {
-      app: { logger },
-    } = ctx;
-
+  return async function (ctx, next) {
     const timestamp = Date.now();
     try {
       await next();

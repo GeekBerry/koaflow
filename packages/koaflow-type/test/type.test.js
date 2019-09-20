@@ -14,15 +14,6 @@ test('error not exist type name', () => {
   assert(ret instanceof type.TypeError);
 });
 
-test('set duplication name', () => {
-  try {
-    type.array = type.$extend(Array.isArray);
-  } catch (e) {
-    ret = e;
-  }
-  assert(ret instanceof type.TypeError);
-});
-
 test('set not a type', () => {
   try {
     type.myType = () => true;

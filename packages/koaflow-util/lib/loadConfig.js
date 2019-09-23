@@ -9,8 +9,8 @@ function loadConfig(dir = '.', env) {
     }
   }
 
-  env = env || (process.env.NODE_ENV || '').toLowerCase();
-  return Object.assign({}, load(''), load(env), load('local'));
+  env = env || (process.env.NODE_ENV || 'dev').toLowerCase();
+  return Object.assign({}, load(''), load(env));
 }
 
 module.exports = loadConfig;

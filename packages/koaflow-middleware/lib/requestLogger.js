@@ -1,15 +1,30 @@
-function pick(obj, list) {
-  const ret = {};
-  for (const key of list) {
-    ret[key] = obj[key];
-  }
-  return ret;
+const lodash = require('lodash');
+
+function pick(ctx, keyToPath, keyToDefaultPath = {}) {
+  const info = {};
+
+  lodash.forEach(keyToPath, (path, key) => {
+    if (path === true) {
+      path = keyToDefaultPath[key];
+    }
+
+    let value = undefined;
+    if (typeof path === 'string') {
+      value = lodash.get(ctx, path);
+    } else if (lodash.isFunction(path)) {
+      value = path(ctx);
+    }
+
+    lodash.set(info, key, value);
+  });
+
+  return info;
 }
 
 function requestLogger({
   logger = console,
-  request = ['timestamp', 'method', 'url'],
-  response = ['status', 'length', 'duration'],
+  request = { timestamp: true, method: true, url: true },
+  response = { status: true, length: true, duration: true },
   level = 'info',
   format = 'json',
 } = {}) {
@@ -32,32 +47,35 @@ function requestLogger({
 
   return async function (ctx, next) {
     const timestamp = Date.now();
+
     try {
       await next();
     } finally {
-      const info = {
-        request: pick({
-          timestamp,
-          http: ctx.req.httpVersion,
-          method: ctx.request.method,
-          url: ctx.request.url,
-          params: ctx.params,
-          query: ctx.request.query,
-          header: ctx.request.header,
-          body: ctx.request.body,
-        }, request),
+      if (logger) {
+        const info = {};
 
-        response: pick({
-          duration: Date.now() - timestamp,
-          length: ctx.response.length,
-          status: ctx.response.status,
-          message: ctx.response.message,
-          header: ctx.response.header,
-          body: ctx.response.body,
-        }, response),
-      };
+        info.request = pick(ctx, request, {
+          timestamp: () => timestamp,
+          http: 'req.httpVersion',
+          method: 'request.method',
+          url: 'request.url',
+          params: 'params',
+          query: 'request.query',
+          header: 'request.header',
+          body: 'request.body',
+        });
 
-      logger[level](format(info));
+        info.response = pick(ctx, response, {
+          duration: () => Date.now() - timestamp,
+          length: 'response.length',
+          status: 'response.status',
+          message: 'response.message',
+          header: 'response.header',
+          body: 'response.body',
+        });
+
+        logger[level](format(info));
+      }
     }
   };
 }

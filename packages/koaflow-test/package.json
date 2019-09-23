@@ -1,6 +1,6 @@
 {
   "name": "koaflow-test",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "main": "index.js",
   "license": "MIT",
   "files": [
@@ -11,7 +11,7 @@
     "yarn.lock"
   ],
   "dependencies": {
-    "koaflow-util": "0.0.6",
+    "koaflow-util": "0.0.7",
     "lodash": "^4.17.15",
     "supertest": "^4.0.2"
   }

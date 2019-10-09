@@ -1,5 +1,19 @@
 const lodash = require('lodash');
 
+/**
+ * @param {object} ctx
+ * @param {object} keyToPath: {string:<true|string|function>, ...}
+ *   true: use `keyToDefaultPath` value
+ *   string: get attribute from ctx
+ *   function: get attribute by function(ctx)
+ * @param {object} keyToDefaultPath: {string:<true|string|function>, ...}
+ * @return {object}
+ *
+ * @example
+ > pick(ctx, {url: true}, {url: 'request.url'}) // url === ctx.request.url
+ > pick(ctx, {body: 'response.body'}) // body === ctx.response.body
+ > pick(ctx, {array: (ctx)=>ctx.request.url.split('/')})
+ */
 function pick(ctx, keyToPath, keyToDefaultPath = {}) {
   const info = {};
 
@@ -21,10 +35,18 @@ function pick(ctx, keyToPath, keyToDefaultPath = {}) {
   return info;
 }
 
-function requestLogger({
-  logger = console,
-  request = { timestamp: true, method: true, url: true },
-  response = { status: true, length: true, duration: true },
+/**
+ *
+ * @param {object} logger
+ * @param {object} requestConfig: {string:<true|string|function>, ...}
+ * @param {object} responseConfig: {string:<true|string|function>, ...}
+ * @param {string} level
+ * @param {string|function} format
+ * @return {Function}
+ */
+function requestLogger(logger, {
+  request: requestConfig = { timestamp: true, method: true, url: true },
+  response: responseConfig = { status: true, length: true, duration: true },
   level = 'info',
   format = 'json',
 } = {}) {
@@ -41,7 +63,10 @@ function requestLogger({
       format = v => v;
       break;
 
-    default: // format should be a function
+    default:
+      if (!lodash.isFunction(format)) {
+        throw new Error(`format should be one of ['readable', 'json', 'object'] or a function, got "${format}"`);
+      }
       break;
   }
 
@@ -54,7 +79,7 @@ function requestLogger({
       if (logger) {
         const info = {};
 
-        info.request = pick(ctx, request, {
+        info.request = pick(ctx, requestConfig, {
           timestamp: () => timestamp,
           http: 'req.httpVersion',
           method: 'request.method',
@@ -65,7 +90,7 @@ function requestLogger({
           body: 'request.body',
         });
 
-        info.response = pick(ctx, response, {
+        info.response = pick(ctx, responseConfig, {
           duration: () => Date.now() - timestamp,
           length: 'response.length',
           status: 'response.status',

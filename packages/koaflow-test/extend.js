@@ -1,15 +1,8 @@
 const lodash = require('lodash');
 const supertest = require('supertest');
-const { loadConfig } = require('koaflow-util');
 
-function extendApp(App, { configDir = './config' } = {}) {
-  const config = loadConfig(configDir);
-
+module.exports = function (App) {
   class TestApp extends App {
-    constructor(options) {
-      super(options || config);
-    }
-
     mock(path, key, value) {
       this.use((ctx, next) => {
         const obj = lodash.get(ctx, path);
@@ -28,6 +21,4 @@ function extendApp(App, { configDir = './config' } = {}) {
   }
 
   return TestApp;
-}
-
-module.exports = extendApp;
+};

@@ -124,11 +124,7 @@ class Type extends Function {
 }
 
 class Entry {
-  constructor(key, { path = '', type: _type = new Type(), 'default': _default, required = false, ...options }) {
-    if(!(_type instanceof Type)) {
-      throw new TypeError(` type "${_type}" not a instanceof Type`);
-    }
-
+  constructor(key, { path = '', type: _type = v => v, 'default': _default, required = false, ...options }) {
     if (!lodash.every(Object.values(options), lodash.isFunction)) {
       throw new TypeError(` not every value in options keys=[${Object.keys(options)}] are function`);
     }
@@ -137,7 +133,7 @@ class Entry {
     this.type = _type;
     this.default = lodash.isFunction(_default) ? _default : () => _default;
     this.required = lodash.isFunction(required) ? required : () => required;
-    this.condition = function(value, dist) {
+    this.condition = function (value, dist) {
       lodash.forEach(options, (condition, name) => {
         if (!condition(value, dist)) {
           throw new TypeError(` do not match condition ${name}, got: ${value}`);

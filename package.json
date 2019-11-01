@@ -7,11 +7,8 @@
   "bugs": {
     "url": "https://github.com/GeekBerry/koaflow/issues"
   },
-  "devDependencies": {
-    "lerna": "^3.16.4"
-  },
   "scripts": {
     "bootstrap": "lerna bootstrap",
-    "publish": "lerna publish"
+    "publish": "lerna publish --no-git-tag-version --no-push"
   }
 }

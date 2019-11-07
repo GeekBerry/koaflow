@@ -79,7 +79,7 @@ class Type extends Function {
 
   static $schema(object) {
     const keyToEntry = lodash.mapValues(object, (v, k) => {
-      return lodash.isFunction(v) ? new Entry(k, { type: v }) : new Entry(k, v);
+      return lodash.isFunction(v) ? new Entry(k, { type: v, required: true }) : new Entry(k, v);
     });
 
     return class extends this {

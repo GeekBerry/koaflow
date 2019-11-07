@@ -6,7 +6,7 @@ let func;
 
 beforeAll(() => {
   func = type({
-    id: type.int,
+    id: { type: type.int, required: true },
     page: { path: 'query', type: type.int.$or(type.null), 'bigger then 0': v => v > 0 },
     limit: { path: 'query', default: 10 },
     title: { path: 'body', required: v => v.id > 10 },

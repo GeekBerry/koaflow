@@ -1,5 +1,4 @@
 const type = require('../');
-const assert = require('koaflow-test/assert');
 
 let ret;
 let func;
@@ -24,7 +23,7 @@ test('error condition', () => {
     ret = e;
   }
 
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('normal', () => {
@@ -33,7 +32,7 @@ test('normal', () => {
     query: { page: '1' },
   });
 
-  assert(ret, {
+  expect(ret).toEqual({
     id: 1,
     page: 1,
     limit: 10,
@@ -47,7 +46,10 @@ test('test to type.xxx.$schema', () => {
     page: { type: type.integer },
   })('{"id":1,"page":1}');
 
-  assert(ret, { id: 1, page: 1 });
+  expect(ret).toEqual({
+    id: 1,
+    page: 1,
+  });
 });
 
 test('with func', () => {
@@ -56,7 +58,10 @@ test('with func', () => {
     age: type.number,
   })({ name: 'Tom', age: 18, city: 'BeiJing' });
 
-  assert(ret, { name: 'Tom', age: 18, city: undefined });
+  expect(ret).toEqual({
+    name: 'Tom',
+    age: 18,
+  });
 });
 
 test('miss required', () => {
@@ -68,7 +73,7 @@ test('miss required', () => {
     ret = e;
   }
 
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('error condition', () => {
@@ -80,7 +85,8 @@ test('error condition', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('error complicated condition', () => {
@@ -95,10 +101,10 @@ test('error complicated condition', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 afterEach(() => {
-  console.log(ret);
+  // console.log(ret);
   ret = undefined;
 });

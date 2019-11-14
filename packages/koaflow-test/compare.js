@@ -1,6 +1,6 @@
 const lodash = require('lodash');
 
-function assert(data, template, { err = null, path = '' } = {}) {
+function compare(data, template, { err = null, path = '' } = {}) {
   if (arguments.length <= 1) {
     template = v => v;
   }
@@ -14,11 +14,11 @@ function assert(data, template, { err = null, path = '' } = {}) {
     }
   } else if (Array.isArray(template)) {
     template.forEach((v, i) => {
-      assert(lodash.get(data, i), v, { path: `${path}[${i}]`, err });
+      compare(lodash.get(data, i), v, { path: `${path}[${i}]`, err });
     });
   } else if (lodash.isObject(template)) {
     lodash.forEach(template, (v, k) => {
-      assert(lodash.get(data, k), v, { path: `${path}.${k}`, err });
+      compare(lodash.get(data, k), v, { path: `${path}.${k}`, err });
     });
   } else {
     if (!(template === data)) {
@@ -28,9 +28,9 @@ function assert(data, template, { err = null, path = '' } = {}) {
   }
 }
 
-assert.dump = (v, t = {}) => {
+compare.dump = (v, t = {}) => {
   console.log(JSON.stringify(v, null, 2)); // eslint-disable-line
-  return assert(v, t);
+  return compare(v, t);
 };
 
-module.exports = assert;
+module.exports = compare;

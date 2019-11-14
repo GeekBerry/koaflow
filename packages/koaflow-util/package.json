@@ -8,8 +8,5 @@
     "index.js",
     "readme.md",
     "yarn.lock"
-  ],
-  "devDependencies": {
-    "jest": "^24.9.0"
-  }
+  ]
 }

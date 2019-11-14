@@ -8,4 +8,4 @@ koa app extend. change koa router to flow by hide and auto call `next()`.
 
 # Usage
 
-[example](https://github.com/GeekBerry/koaflow/tree/master/example)
+[example](https://github.com/GeekBerry/koaflow/blob/master/example/app.js)

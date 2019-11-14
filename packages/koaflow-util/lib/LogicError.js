@@ -19,26 +19,4 @@ class LogicError extends Error {
   }
 }
 
-/**
- * wrap a error to a LogicError subclass instance
- * @param {Function} condition: Error=>boolean
- * @param {object|LogicError} options: option object or LogicError subclass (use as object)
- * @return {Function}: middleware
- */
-function wrap(condition, options = {}) {
-  const ErrorType = LogicError.extend(options);
-
-  return async (ctx, next) => {
-    try {
-      await next();
-    } catch (e) {
-      if (condition(e)) {
-        e = new ErrorType(e);
-      }
-      throw e;
-    }
-  };
-}
-
 module.exports = LogicError;
-module.exports.wrap = wrap;

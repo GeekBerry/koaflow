@@ -16,27 +16,6 @@ class App extends Koa {
     this.use(koaBodyParser({ enableTypes: ['json', 'form', 'text'] }));
   }
 
-  then(func) {
-    this.use(
-      async (ctx, next) => {
-        await func.call(ctx, ctx);
-        await next();
-      },
-    );
-  }
-
-  catch(func) {
-    this.use(
-      async (ctx, next) => {
-        try {
-          await next();
-        } catch (e) {
-          await func.call(ctx, e);
-        }
-      },
-    );
-  }
-
   use(func, { prepend = false } = {}) {
     super.use(func);
     if (prepend) {

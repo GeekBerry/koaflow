@@ -1,6 +1,4 @@
 const lodash = require('lodash');
-const assert = require('koaflow-test/assert');
-
 const type = require('../index');
 
 let ret;
@@ -11,7 +9,7 @@ test('error not exist type name', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('set not a type', () => {
@@ -21,13 +19,14 @@ test('set not a type', () => {
     ret = e;
   }
 
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 // ----------------------------------------------------------------------------
 test('null to be null', () => {
   ret = type.null(null);
-  assert(ret, null);
+
+  expect(ret).toBe(null);
 });
 
 test('null not accept "null"', () => {
@@ -36,24 +35,25 @@ test('null not accept "null"', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 // ----------------------------------------------------------------------------
 test('boolean to be true', () => {
   ret = type.boolean(true);
-  assert(ret, true);
+  expect(ret).toBe(true);
 });
 
 test('boolean to be false', () => {
   ret = type.boolean(false);
 
-  assert(ret, false);
+  expect(ret).toBe(false);
 });
 
 test('boolean to equal Boolean', () => {
   ret = type.boolean(Boolean(1));
-  assert(ret, true);
+
+  expect(ret).toBe(true);
 });
 
 test('boolean not accept number', () => {
@@ -62,33 +62,38 @@ test('boolean not accept number', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('bool to be true', () => {
   ret = type.bool(true);
-  assert(ret, true);
+
+  expect(ret).toBe(true);
 });
 
 test('bool string true', () => {
   ret = type.bool('TrUe');
-  assert(ret, true);
+
+  expect(ret).toBe(true);
 });
 
 // ----------------------------------------------------------------------------
 test('string', () => {
   ret = type.string(' abc ');
-  assert(ret, ' abc ');
+
+  expect(ret).toBe(' abc ');
 });
 
 test('string accept empty string', () => {
   ret = type.string('');
-  assert(ret, '');
+
+  expect(ret).toBe('');
 });
 
 test('string to equal String', () => {
   ret = type.string(String(' abc '));
-  assert(ret, ' abc ');
+
+  expect(ret).toBe(' abc ');
 });
 
 test('string not accept buffer', () => {
@@ -97,12 +102,13 @@ test('string not accept buffer', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('str', () => {
   ret = type.str(' abc ');
-  assert(ret, 'abc');
+
+  expect(ret).toBe('abc');
 });
 
 test('str not accept empty', () => {
@@ -111,18 +117,20 @@ test('str not accept empty', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 // ----------------------------------------------------------------------------
 test('number', () => {
   ret = type.number(3.14);
-  assert(ret, 3.14);
+
+  expect(ret).toBe(3.14);
 });
 
 test('number to equal Number', () => {
   ret = type.number(Number('3.14'));
-  assert(ret, 3.14);
+
+  expect(ret).toBe(3.14);
 });
 
 test('number not accept number string', () => {
@@ -131,7 +139,8 @@ test('number not accept number string', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('number not accept NaN', () => {
@@ -140,7 +149,7 @@ test('number not accept NaN', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('number not accept Infinity', () => {
@@ -149,27 +158,31 @@ test('number not accept Infinity', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('num', () => {
   ret = type.num('-3.14');
-  assert(ret, -3.14);
+
+  expect(ret).toBe(-3.14);
 });
 
 test('num accept hex string', () => {
   ret = type.num('0xff');
-  assert(ret, 255);
+
+  expect(ret).toBe(255);
 });
 // ----------------------------------------------------------------------------
 test('integer', () => {
   ret = type.integer(123);
-  assert(ret, 123);
+
+  expect(ret).toBe(123);
 });
 
 test('integer accept integer able', () => {
   ret = type.integer(123.0);
-  assert(ret, 123);
+
+  expect(ret).toBe(123);
 });
 
 test('integer not accept integer string', () => {
@@ -178,7 +191,7 @@ test('integer not accept integer string', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('integer not accept float', () => {
@@ -187,7 +200,7 @@ test('integer not accept float', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('integer not accept NaN', () => {
@@ -196,7 +209,7 @@ test('integer not accept NaN', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('integer not accept Infinity', () => {
@@ -205,23 +218,26 @@ test('integer not accept Infinity', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('int', () => {
   ret = type.int('123');
-  assert(ret, 123);
+
+  expect(ret).toBe(123);
 });
 
 // ----------------------------------------------------------------------------
 test('array', () => {
   ret = type.array([]);
-  assert(ret, [undefined]);
+
+  expect(ret).toEqual([]);
 });
 
 test('array to equal Array', () => {
   ret = type.array(Array());
-  assert(ret, [undefined]);
+
+  expect(ret).toEqual([]);
 });
 
 test('array not accept array string', () => {
@@ -230,17 +246,19 @@ test('array not accept array string', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('arr', () => {
   ret = type.arr('1,,3,');
-  assert(ret, ['1', '', '3', '', undefined]);
+
+  expect(ret).toEqual(['1', '', '3', '']);
 });
 
 test('arr not accept json', () => {
   ret = type.arr('[1,2,3]');
-  assert(ret, ['[1', '2', '3]', undefined]);
+
+  expect(ret).toEqual(['[1', '2', '3]']);
 });
 
 // ----------------------------------------------------------------------------
@@ -255,14 +273,14 @@ test('object not accept array', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('object not accept object string', () => {
   try {
     ret = type.object('{}');
   } catch (e) { ret = e;}
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('obj', () => {
@@ -281,7 +299,7 @@ test('obj not a json', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('obj not accept array', () => {
@@ -290,63 +308,73 @@ test('obj not accept array', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 // ----------------------------------------------------------------------------
 test('buffer', () => {
   ret = type.buffer(Buffer.from('abc'));
-  assert(ret instanceof Buffer);
+
+  expect(ret instanceof Buffer).toBe(true);
 });
 
 // ----------------------------------------------------------------------------
 test('mongoId', () => {
   const string = lodash.range(24).map(() => '0123456789abcdefABCDEF'[lodash.random(0, 21)]).join('');
   ret = type.mongoId(string);
-  assert(ret, string);
+
+  expect(ret).toBe(string);
 });
 
 test('md5', () => {
   const string = lodash.range(32).map(() => '0123456789abcdefABCDEF'[lodash.random(0, 21)]).join('');
   ret = type.md5(string);
-  assert(ret, string);
+
+  expect(ret).toBe(string);
 });
 
 test('sha1', () => {
   const string = lodash.range(40).map(() => '0123456789abcdefABCDEF'[lodash.random(0, 21)]).join('');
   ret = type.sha1(string);
-  assert(ret, string);
+
+  expect(ret).toBe(string);
 });
 
 test('sha256', () => {
   const string = lodash.range(96).map(() => '0123456789abcdefABCDEF'[lodash.random(0, 21)]).join('');
   ret = type.sha256(string);
-  assert(ret, string);
+
+  expect(ret).toBe(string);
 });
 
 test('sha512', () => {
   const string = lodash.range(128).map(() => '0123456789abcdefABCDEF'[lodash.random(0, 21)]).join('');
   ret = type.sha512(string);
-  assert(ret, string);
+
+  expect(ret).toBe(string);
 });
 
 test('base64', () => {
   ret = type.base64('WWVzIQ==');
-  assert(ret, 'WWVzIQ==');
+
+  expect(ret).toBe('WWVzIQ==');
 });
 
 test('json', () => {
   ret = type.json('{"name":"Tom"}');
-  assert(ret, '{"name":"Tom"}');
+
+  expect(ret).toBe('{"name":"Tom"}');
 });
 
 test('json accept not object json', () => {
   ret = type.json('0');
-  assert(ret, '0');
+
+  expect(ret).toBe('0');
 });
 
 test('hex', () => {
   ret = type.hex('0123456789abcdefABCDEF');
-  assert(ret, '0123456789abcdefABCDEF');
+
+  expect(ret).toBe('0123456789abcdefABCDEF');
 });
 
 test('hex not accept 0x prefix', () => {
@@ -355,40 +383,46 @@ test('hex not accept 0x prefix', () => {
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('hex0x', () => {
   ret = type.hex0x('0x0123456789abcdefABCDEF');
-  assert(ret, '0x0123456789abcdefABCDEF');
+
+  expect(ret).toBe('0x0123456789abcdefABCDEF');
 });
 
 test('ip', () => {
   ret = type.ip('127.0.0.1');
-  assert(ret, '127.0.0.1');
+
+  expect(ret).toBe('127.0.0.1');
 });
 
 test('url', () => {
   ret = type.url('http://xxx.com');
-  assert(ret, 'http://xxx.com');
+
+  expect(ret).toBe('http://xxx.com');
 });
 
 // ----------------------------------------------------------------------------
 test('str or int or null', () => {
   const t = type.str.$or(type.int).$or(type.null);
-  assert(t(' abc '), 'abc');
-  assert(t(1), 1);
-  assert(t(null), null);
+
+  expect(t(' abc ')).toBe('abc');
+  expect(t(1)).toBe(1);
+  expect(t(null)).toBe(null);
 
   try {
     ret = t(true);
   } catch (e) {
     ret = e;
   }
-  assert(ret instanceof type.TypeError);
+  expect(ret instanceof type.TypeError).toBe(true);
 });
 
 test('arr of int', () => {
   ret = type.arr.$each(type.int)('1,2,3');
-  assert(ret, [1, 2, 3, undefined]);
+
+  expect(ret).toEqual([1, 2, 3]);
 });

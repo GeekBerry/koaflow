@@ -1,12 +1,14 @@
 function flow(...functions) {
   return async (ctx, next) => {
-    let arg = ctx;
     let ret = undefined;
 
+    let lastReturn = undefined;
+    let nextParam = ctx;
     for (const func of functions) {
-      ret = await func.call(ctx, arg, next);
-      if (ret !== undefined) {
-        arg = ret;
+      lastReturn = await func.call(ctx, nextParam, next);
+      if (lastReturn !== undefined) {
+        nextParam = lastReturn;
+        ret = lastReturn;
       }
     }
 

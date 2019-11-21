@@ -7,13 +7,13 @@ const flow = require('./flow');
 class AppRouter extends KoaRouter {
   _wrapAsFlow(method) {
     return (path, ...functions) => {
-      function middleware(ctx, next) {
-        // set last (!undefined) return value to body
-        const bindFlow = flow(...functions, ret => {ctx.body = ret;});
-        return bindFlow(ctx, next);
-      }
-
-      method.call(this, path, middleware);
+      method.call(this, path, async (ctx, next) => {
+        const ret = await flow(...functions)(ctx, next);
+        if (ret !== undefined) {
+          ctx.body = ret;
+        }
+        return ret;
+      });
     };
   }
 

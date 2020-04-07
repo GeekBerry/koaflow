@@ -1,6 +1,6 @@
 {
   "name": "koaflow",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "koa app extend",
   "author": "geekberry@qq.com",
   "license": "MIT",
@@ -26,7 +26,6 @@
     "jest": "^24.9.0"
   },
   "scripts": {
-    "test": "jest",
-    "publish": "yarn publish"
+    "test": "jest"
   }
 }

@@ -1,11 +1,22 @@
 const lodash = require('lodash');
-const callable = require('../util/callable');
+
+function callable(object, func) {
+  return new Proxy(func, {
+    getPrototypeOf: () => Object.getPrototypeOf(object),
+    getOwnPropertyDescriptor: (_, key) => Object.getOwnPropertyDescriptor(object, key),
+    ownKeys: () => Reflect.ownKeys(object),
+    has: (_, key) => Reflect.has(object, key),
+    get: (_, key) => Reflect.get(object, key),
+    set: (_, key, value) => Reflect.set(object, key, value),
+    deleteProperty: (_, key) => Reflect.deleteProperty(object, key),
+  });
+}
 
 class Parser {
   constructor(...args) {
     this.name = this.constructor.name;
     this.args = args;
-    return callable(this, this.__call__.bind(this));
+    return callable(this, (...args) => this.__call__(...args));
   }
 
   __call__(data) {

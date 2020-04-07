@@ -1,3 +1,4 @@
+const lodash = require('lodash');
 const KoaRouter = require('koa-router');
 const flow = require('./flow');
 
@@ -31,9 +32,9 @@ class Router extends KoaRouter {
     this.delete = this._wrapAsFlow(this.delete);
   }
 
-  subRouter(path, router) {
-    if (!(typeof path !== 'string')) {
-      throw new Error(`path "${router}" not string`);
+  sub(path, router) {
+    if (!lodash.isString(path)) {
+      throw new Error(`path "${path}" not string`);
     }
     if (!(router instanceof KoaRouter)) {
       throw new Error(`${router} not instanceof koa-router`);

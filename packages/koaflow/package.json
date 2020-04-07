@@ -13,13 +13,13 @@
   ],
   "files": [
     "lib",
-    "index.js",
-    "readme.md",
-    "yarn.lock"
+    "src",
+    "index.js"
   ],
   "dependencies": {
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",
-    "koa-router": "^7.4.0"
+    "koa-router": "^7.4.0",
+    "lodash": "^4.17.15"
   }
 }

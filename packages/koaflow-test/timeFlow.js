@@ -2,17 +2,15 @@ const lodash = require('lodash');
 const colors = require('colors/safe'); // eslint-disable-line import/no-extraneous-dependencies
 
 class TimeFlow {
-  constructor({ size = 12, length = 16, interval = 1000 } = {}) {
-    this._stop = false;
-
+  constructor({ size = 13, length = 16, interval = 1000 } = {}) {
     this.size = size;
     this.length = length;
+    this.interval = interval;
 
-    this._countArray = lodash.range(size).map(() => 0);
-    this._startTimestamp = Date.now();
-    this._lastTimestamp = null;
-
-    this._drawLinesLoop(interval).catch(() => {});
+    this._stop = true;
+    this._countArray = lodash.range(this.size).map(() => 0);
+    this._startTimestamp = undefined;
+    this._lastTimestamp = undefined;
   }
 
   _timestamp() {
@@ -27,13 +25,12 @@ class TimeFlow {
    get a cell string with `pos` back ground color
    */
   _cell(pos, str, suffix = '', color = null) {
+    const char = this._countArray[pos] ? colors.bgWhite(' ') : ' ';
+
     const empty = lodash.repeat(' ', this.length);
     str = lodash.truncate(`${str}${empty}`, { length: this.length, omission: `${suffix}` });
     str = lodash.padEnd(str, this.length, ' ');
-
-    if (this._countArray[pos]) {
-      str = colors.bgWhite(str);
-    }
+    str = `${char}${str}${char}`;
 
     if (color) {
       str = colors[color](str);
@@ -52,7 +49,7 @@ class TimeFlow {
   async _drawLinesLoop(interval) {
     while (!this._stop) {
       const array = this._array(lodash.repeat('.', this.length));
-      console.log(`${this._timestamp()}: ${array.join(' | ')} |`);
+      console.log(`${this._timestamp()}: ${array.join('|')} |`);
       await new Promise(resolve => setTimeout(resolve, interval));
     }
   }
@@ -62,9 +59,11 @@ class TimeFlow {
    print a line with timestamp and full cell in `pos` with `str`
    */
   print(pos, str, suffix = '', color = null) {
-    const array = this._array();
-    array[pos] = this._cell(pos, str, suffix, color);
-    console.log(`${this._timestamp()}: ${array.join(' | ')} |`);
+    if (!this._stop) {
+      const array = this._array();
+      array[pos] = this._cell(pos, str, suffix, color);
+      console.log(`${this._timestamp()}: ${array.join('|')} |`);
+    }
   }
 
   /**
@@ -97,7 +96,14 @@ class TimeFlow {
     };
   }
 
-  close() {
+  start() {
+    this._stop = false;
+    this._startTimestamp = Date.now();
+    this._lastTimestamp = null;
+    this._drawLinesLoop(this.interval).catch(() => {});
+  }
+
+  stop() {
     this._stop = true;
   }
 }

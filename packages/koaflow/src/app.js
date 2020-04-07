@@ -1,17 +1,16 @@
 const Koa = require('koa');
 const koaBodyParser = require('koa-bodyparser');
-const AppRouter = require('./router');
+const Router = require('./router');
 
 /**
- * App
+ * Koaflow
  */
-class App extends Koa {
+class Koaflow extends Koa {
   constructor(options) {
     super(options);
     this._httpServer = null;
 
-    this.router = new AppRouter();
-    this.logger = console;
+    this.router = new Router();
 
     this.use(koaBodyParser({ enableTypes: ['json', 'form', 'text'] }));
   }
@@ -42,4 +41,4 @@ class App extends Koa {
   }
 }
 
-module.exports = App;
+module.exports = Koaflow;

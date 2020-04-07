@@ -2,9 +2,9 @@ const KoaRouter = require('koa-router');
 const flow = require('./flow');
 
 /**
- * AppRouter
+ * Router
  */
-class AppRouter extends KoaRouter {
+class Router extends KoaRouter {
   _wrapAsFlow(method) {
     return (path, ...functions) => {
       method.call(this, path, async (ctx, next) => {
@@ -21,17 +21,20 @@ class AppRouter extends KoaRouter {
     super(...args);
 
     // methods name from "this.methods", list them for IDEA friendly
-    this.allFlow = this._wrapAsFlow(this.all);
-    this.headFlow = this._wrapAsFlow(this.head);
-    this.optionsFlow = this._wrapAsFlow(this.options);
-    this.getFlow = this._wrapAsFlow(this.get);
-    this.postFlow = this._wrapAsFlow(this.post);
-    this.putFlow = this._wrapAsFlow(this.put);
-    this.patchFlow = this._wrapAsFlow(this.patch);
-    this.deleteFlow = this._wrapAsFlow(this.delete);
+    this.all = this._wrapAsFlow(this.all);
+    this.head = this._wrapAsFlow(this.head);
+    this.options = this._wrapAsFlow(this.options);
+    this.get = this._wrapAsFlow(this.get);
+    this.post = this._wrapAsFlow(this.post);
+    this.put = this._wrapAsFlow(this.put);
+    this.patch = this._wrapAsFlow(this.patch);
+    this.delete = this._wrapAsFlow(this.delete);
   }
 
   subRouter(path, router) {
+    if (!(typeof path !== 'string')) {
+      throw new Error(`path "${router}" not string`);
+    }
     if (!(router instanceof KoaRouter)) {
       throw new Error(`${router} not instanceof koa-router`);
     }
@@ -39,4 +42,4 @@ class AppRouter extends KoaRouter {
   }
 }
 
-module.exports = AppRouter;
+module.exports = Router;

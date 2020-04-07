@@ -1,3 +1,3 @@
-module.exports = require('./lib/app');
-module.exports.App = require('./lib/app');
-module.exports.Router = require('./lib/router');
+module.exports = require('./src/app');
+module.exports.Router = require('./src/router');
+module.exports.Error = require('./src/error');

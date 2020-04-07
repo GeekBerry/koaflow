@@ -1,7 +1,7 @@
 {
   "author": "geekberry@qq.com",
   "license": "MIT",
-  "main": "./packages/koaflow/index.js",
+  "main": "packages/koaflow/src/app.js",
   "homepage": "https://github.com/GeekBerry/koaflow#readme",
   "repository": "git+https://github.com/GeekBerry/koaflow.git#dev",
   "bugs": {

@@ -1,6 +1,6 @@
 const path = require('path');
 
-function loadConfig(dir = '.', env) {
+function loadConfig(dir, env = '') {
   function load(name) {
     try {
       return require(path.resolve(dir, name));
@@ -9,8 +9,7 @@ function loadConfig(dir = '.', env) {
     }
   }
 
-  env = env || (process.env.NODE_ENV || 'dev').toLowerCase();
-  return Object.assign({}, load(''), load(env));
+  return Object.assign({}, load(env), load('local'));
 }
 
 module.exports = loadConfig;

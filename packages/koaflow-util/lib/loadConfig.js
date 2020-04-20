@@ -9,7 +9,7 @@ function loadConfig(dir, env = '') {
     }
   }
 
-  return Object.assign({}, load(env), load('local'));
+  return Object.assign({}, load(''), load(env), load('local'));
 }
 
 module.exports = loadConfig;

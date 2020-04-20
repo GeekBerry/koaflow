@@ -21,6 +21,7 @@ test('configDir env', () => {
   const config = loadConfig(`${__dirname}/__mock__/configDir`, 'test');
 
   expect(config).toEqual({
+    index: true,
     test: true,
     local: true,
   });

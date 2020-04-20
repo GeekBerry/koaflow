@@ -8,12 +8,11 @@ const flow = require('./flow');
 class Router extends KoaRouter {
   _wrapAsFlow(method) {
     return (path, ...functions) => {
-      method.call(this, path, async (ctx, next) => {
+      method.call(this, path, async (ctx) => {
         const ret = await flow(...functions)(ctx);
         if (ret !== undefined) {
           ctx.body = ret;
         }
-        await next();
       });
     };
   }

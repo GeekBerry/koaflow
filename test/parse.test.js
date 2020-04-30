@@ -7,9 +7,9 @@ test('parse Error', () => {
 test('parseFunction', () => {
   const parser = parse(Number);
 
-  expect(parser(undefined)).toEqual(undefined);
   expect(parser(true)).toEqual(1);
   expect(parser('0x10')).toEqual(16);
+  expect(parser(undefined)).toEqual(undefined);
 });
 
 test('parseObject', () => {
@@ -40,10 +40,13 @@ test('parseObject', () => {
     },
     d: null,
   });
+
+  expect(parser(undefined)).toEqual(undefined);
 });
 
 test('parseArray', () => {
   const parser = parse([Number]);
 
   expect(parser(['1', '2', '3'])).toEqual([1, 2, 3]);
+  expect(parser(undefined)).toEqual(undefined);
 });

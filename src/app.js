@@ -25,18 +25,18 @@ class Koaflow extends Koa {
   }
 
   listen(...args) {
-    if (!this._httpServer) {
+    if (!this.server) {
       this.use(this.router.routes());
       this.use(this.router.allowedMethods());
-      this._httpServer = super.listen(...args);
+      this.server = super.listen(...args);
     }
-    return this._httpServer;
+    return this.server;
   }
 
   close() {
-    if (this._httpServer) {
-      this._httpServer.close();
-      this._httpServer = null;
+    if (this.server) {
+      this.server.close();
+      this.server = null;
     }
   }
 }

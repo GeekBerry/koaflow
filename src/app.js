@@ -8,10 +8,8 @@ const Router = require('./router');
 class Koaflow extends Koa {
   constructor(options) {
     super(options);
-    this._httpServer = null;
 
     this.router = new Router();
-
     this.use(koaBodyParser({ enableTypes: ['json', 'form', 'text'] }));
   }
 

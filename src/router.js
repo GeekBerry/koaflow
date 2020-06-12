@@ -1,9 +1,9 @@
 const KoaRouter = require('koa-router');
 const flow = require('./flow');
 
-function decorateFlow(func) {
+function decorateFlow(method) {
   return function (path, ...functions) {
-    return func.call(this, path, async ctx => {
+    method.call(this, path, async ctx => {
       const ret = await flow(...functions)(ctx);
       if (ret !== undefined) {
         ctx.body = ret;

@@ -1,7 +1,7 @@
 const Koaflow = require('../index');
 const loadConfig = require('../lib/util/loadConfig');
 const jsonError = require('../lib/middleware/jsonError');
-const ctxRequestId = require('../lib/middleware/ctxRequestId');
+const requestId = require('../lib/middleware/requestId');
 const requestLogger = require('../lib/middleware/requestLogger');
 
 // ----------------------------------------------------------------------------
@@ -20,7 +20,7 @@ class App extends Koaflow {
   listen(port) {
     this.use(jsonError);
     this.use(requestLogger(this.logger));
-    this.use(ctxRequestId);
+    this.use(requestId);
 
     this.router.all('/', () => Date.now());
     this.router.sub('/api', router);

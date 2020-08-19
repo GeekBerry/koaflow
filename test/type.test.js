@@ -3,7 +3,7 @@ const type = require('../lib/type');
 test('not a function', () => {
   expect(() =>
     type.xxx(1),
-  ).toThrow('do not have type named "xxx"');
+  ).toThrow('type.xxx is not a function');
 });
 
 // ----------------------------------------------------------------------------
@@ -58,7 +58,7 @@ test('str', () => {
 });
 
 test('str not accept empty', () => {
-  expect(() => type.str('')).toThrow('do not match "notEmpty"');
+  expect(() => type.str('')).toThrow('do not match "validator"');
 });
 
 // ----------------------------------------------------------------------------
@@ -158,18 +158,25 @@ test('json', () => {
   expect(type.json('{"name":"Tom"}')).toEqual('{"name":"Tom"}');
 });
 
-// ----------------------------------------------------------------------------
+// ============================================================================
 test('$default', () => {
   const func = type.int.$default(100);
 
   expect(func()).toEqual(100);
 });
 
-test('$any', () => {
-  const func = type.$any(type.str, type.int, type.null);
+test('$or', () => {
+  const func = (type.str).$or(type.int).$or(type.null);
 
   expect(func(' abc ')).toEqual('abc');
   expect(func(1)).toEqual(1);
   expect(func(null)).toEqual(null);
-  expect(() => func(true)).toThrow('do not match "str|int|null"');
+  expect(() => func(true)).toThrow('do not match "isNull"');
+});
+
+test('$each', () => {
+  const func = type.arr.$each(type.int);
+
+  expect(func('1,0xa')).toEqual([1, 10]);
+  expect(() => func([1, 3.14])).toThrow('do not match "isSafeInteger"');
 });

@@ -1,27 +1,21 @@
+const lodash = require('lodash');
 const KoaRouter = require('koa-router');
 
-function flow(functions) {
-  return async (ctx) => {
-    let arg = ctx;
-    let ret = undefined;
+function composeFlow([flow = () => undefined, ...restFlow]) {
+  const nextFlow = restFlow.length ? composeFlow(restFlow) : v => v;
 
-    for (const func of functions) {
-      ret = await func.call(ctx, arg);
-      arg = ret;
+  return async function (arg) {
+    let calledNext = false;
+    const next = (options) => {
+      calledNext = true;
+      return nextFlow.call(this, options);
+    };
+
+    let ret = await flow.call(this, arg, next);
+    if (!calledNext) {
+      ret = await nextFlow.call(this, ret);
     }
-
     return ret;
-  };
-}
-
-function decorateFlow(method) {
-  return function (path, ...functions) {
-    method.call(this, path, async ctx => {
-      const ret = await flow(functions)(ctx);
-      if (ret !== undefined) {
-        ctx.body = ret;
-      }
-    });
   };
 }
 
@@ -31,16 +25,33 @@ function decorateFlow(method) {
 class Router extends KoaRouter {
   constructor(...args) {
     super(...args);
+    this.pathTable = {};
 
     // methods name from "this.methods", list them for IDEA friendly
-    this.all = decorateFlow(this.all);
-    this.head = decorateFlow(this.head);
-    this.options = decorateFlow(this.options);
-    this.get = decorateFlow(this.get);
-    this.post = decorateFlow(this.post);
-    this.put = decorateFlow(this.put);
-    this.patch = decorateFlow(this.patch);
-    this.delete = decorateFlow(this.delete);
+    this.all = this._asFlow('all');
+    this.head = this._asFlow('head');
+    this.options = this._asFlow('options');
+    this.get = this._asFlow('get');
+    this.put = this._asFlow('put');
+    this.patch = this._asFlow('patch');
+    this.post = this._asFlow('post');
+    this.delete = this._asFlow('delete');
+  }
+
+  _asFlow(method) {
+    return (path, ...flowArray) => {
+      lodash.set(this.pathTable, [path, method], flowArray);
+
+      const flow = composeFlow(flowArray);
+      const middleware = async (ctx) => {
+        const ret = await flow.call(ctx, ctx);
+        if (ret !== undefined) {
+          ctx.body = ret;
+        }
+      };
+
+      this.register(path, [method], [middleware]);
+    };
   }
 
   sub(path, router) {
@@ -50,7 +61,9 @@ class Router extends KoaRouter {
     if (!(router instanceof KoaRouter)) {
       throw new Error(`${router} not instanceof koa-router`);
     }
-    super.use(path, router.routes(), router.allowedMethods());
+
+    lodash.set(this.pathTable, [path, 'sub'], router);
+    this.use(path, router.routes(), router.allowedMethods());
   }
 }
 

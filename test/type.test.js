@@ -6,6 +6,18 @@ test('not a function', () => {
   ).toThrow('type.xxx is not a function');
 });
 
+test('empty to be undefined', () => {
+  expect(type.undefined()).toEqual(undefined);
+});
+
+test('undefined to be undefined', () => {
+  expect(type.undefined(undefined)).toEqual(undefined);
+});
+
+test('undefined not accept null', () => {
+  expect(() => type.undefined(null)).toThrow('do not match "isUndefined"');
+});
+
 // ----------------------------------------------------------------------------
 test('null to be null', () => {
   expect(type.null(null)).toEqual(null);
@@ -13,6 +25,18 @@ test('null to be null', () => {
 
 test('null not accept "null"', () => {
   expect(() => type.null('null')).toThrow('do not match "isNull"');
+});
+
+test('nul accept "null"', () => {
+  expect(type.nul('null')).toEqual(null);
+});
+
+test('nul accept ""', () => {
+  expect(type.nul('')).toEqual(null);
+});
+
+test('nul not accept undefined"', () => {
+  expect(() => type.nul()).toThrow('do not match "isNull"');
 });
 
 // ----------------------------------------------------------------------------
@@ -174,9 +198,16 @@ test('$or', () => {
   expect(() => func(true)).toThrow('do not match "isNull"');
 });
 
-test('$each', () => {
-  const func = type.arr.$each(type.int);
+test('$array', () => {
+  const func = type.arr.$array(type.int);
 
   expect(func('1,0xa')).toEqual([1, 10]);
   expect(() => func([1, 3.14])).toThrow('do not match "isSafeInteger"');
+});
+
+test('$object', () => {
+  const func = type.$object({ a: type.int, b: type.bool });
+
+  expect(func({ a: '0xa', c: 'string' })).toEqual({ a: 10 });
+  expect(() => func({ b: 1 })).toThrow('do not match "isBoolean"');
 });

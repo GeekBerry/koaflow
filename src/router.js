@@ -21,9 +21,11 @@ class Router extends KoaRouter {
     this.delete = this._asFlow('delete');
   }
 
-  _asFlow(method) {
-    return (path, ...flowArray) => {
-      lodash.set(this.pathTable, [path, method], flowArray);
+  _asFlow(methodName) {
+    const method = this[methodName];
+
+    return function (path, ...flowArray) {
+      lodash.set(this.pathTable, [path, methodName], flowArray);
 
       const flow = composeFlow(flowArray);
       const middleware = async (ctx) => {
@@ -33,7 +35,7 @@ class Router extends KoaRouter {
         }
       };
 
-      this.register(path, [method], [middleware]);
+      method.call(this, path, middleware);
     };
   }
 

@@ -1,5 +1,6 @@
 const lodash = require('lodash');
-const Router = require('../../src/router');
+const Router = require('./router');
+const { composeFlow } = require('./util');
 
 const VERSION = '2.0';
 
@@ -12,21 +13,23 @@ class JsonRPCRouter extends Router {
       const { request: { body } } = ctx;
 
       try {
-        return !Array.isArray(body) ? await this.onRequest(body) : await Promise.all(body.map(data => this.onRequest(data)));
+        return Array.isArray(body)
+          ? await Promise.all(body.map(data => this._onRequest(ctx, data)))
+          : await this._onRequest(ctx, body);
       } catch (e) {
         return { jsonrpc: VERSION, id: null, error: { code: -32603, message: 'Internal error' } };
       }
     });
   }
 
-  method(method, callback) {
+  method(method, ...flowArray) {
     if (Reflect.has(this.methodToCallback, method)) {
       throw new Error(`already exist method "${method}"`);
     }
-    this.methodToCallback[method] = callback;
+    this.methodToCallback[method] = composeFlow(flowArray);
   }
 
-  async onRequest(data) {
+  async _onRequest(ctx, data) {
     if (!lodash.isPlainObject(data)) {
       return { jsonrpc: VERSION, id: null, error: { code: -32700, message: 'Parse error' } };
     }
@@ -46,7 +49,7 @@ class JsonRPCRouter extends Router {
     }
 
     try {
-      const result = await callback(...params);
+      const result = await callback.call(ctx, params);
       return { jsonrpc, id, result };
     } catch (e) {
       return { jsonrpc, id, error: { code: e.code || -32000, message: e.message || 'Server error' } };

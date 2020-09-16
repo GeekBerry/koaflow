@@ -65,7 +65,7 @@ test('call InvalidRequestError', async () => {
     id: 100,
     error: {
       code: -32600,
-      message: 'Invalid request',
+      message: 'Invalid request jsonrpc "undefined"',
     },
   });
 });
@@ -76,7 +76,7 @@ test('call MethodNotFound', async () => {
       body: {
         jsonrpc: '2.0',
         id: 100,
-        method: 'not a method name',
+        method: 'XXX',
         params: ['string', 1],
       },
     },
@@ -87,7 +87,7 @@ test('call MethodNotFound', async () => {
     id: 100,
     error: {
       code: -32601,
-      message: 'Method not found',
+      message: 'Method not found "XXX"',
     },
   });
 });
@@ -109,7 +109,7 @@ test('call InvalidParamsError', async () => {
     id: 100,
     error: {
       code: -32602,
-      message: 'Invalid params',
+      message: 'Invalid params {}',
     },
   });
 });

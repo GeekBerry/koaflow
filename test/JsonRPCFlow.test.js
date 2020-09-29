@@ -4,27 +4,22 @@ const jsonrpc = new JsonRPCFlow();
 
 jsonrpc.method('methodName',
   async function (params) {
-    if (params.length) {
-      return params;
-    } else {
+    if (!params[0]) {
       throw new Error('errorMessage');
     }
+    return params;
   },
 );
 
 test('call', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: {
-        jsonrpc: '2.0',
-        id: 100,
-        method: 'methodName',
-        params: ['string', 1],
-      },
-    },
+  const data = await jsonrpc.call({}, {
+    jsonrpc: '2.0',
+    id: 100,
+    method: 'methodName',
+    params: ['string', 1],
   });
 
-  expect(result).toEqual({
+  expect(data).toEqual({
     jsonrpc: '2.0',
     id: 100,
     result: ['string', 1],
@@ -32,106 +27,105 @@ test('call', async () => {
 });
 
 test('call ParseError', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: null,
-    },
-  });
+  const data = await jsonrpc.call({}, null);
 
-  expect(result).toEqual({
+  expect(data).toEqual({
     jsonrpc: '2.0',
     id: null,
-    error: {
+    error: new JsonRPCFlow.JsonRPCError({
       code: -32700,
-      message: 'Parse error',
-    },
+      message: 'Parse error "null" not a plain object',
+    }),
   });
 });
 
 test('call InvalidRequestError', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: {
-        // jsonrpc: '2.0',
-        id: 100,
-        method: 'methodName',
-        params: ['string', 1],
-      },
-    },
+  const data = await jsonrpc.call({}, {
+    // jsonrpc: '2.0',
+    id: 100,
+    method: 'methodName',
+    params: ['string', 1],
   });
 
-  expect(result).toEqual({
+  expect(data).toEqual({
     jsonrpc: '2.0',
     id: 100,
-    error: {
+    error: new JsonRPCFlow.JsonRPCError({
       code: -32600,
       message: 'Invalid request jsonrpc "undefined"',
-    },
+    }),
   });
 });
 
 test('call MethodNotFound', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: {
-        jsonrpc: '2.0',
-        id: 100,
-        method: 'XXX',
-        params: ['string', 1],
-      },
-    },
-  });
-
-  expect(result).toEqual({
+  const data = await jsonrpc.call({}, {
     jsonrpc: '2.0',
     id: 100,
-    error: {
+    method: 'XXX',
+    params: ['string', 1],
+  });
+
+  expect(data).toEqual({
+    jsonrpc: '2.0',
+    id: 100,
+    error: new JsonRPCFlow.JsonRPCError({
       code: -32601,
       message: 'Method not found "XXX"',
-    },
+    }),
   });
 });
 
 test('call InvalidParamsError', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: {
-        jsonrpc: '2.0',
-        id: 100,
-        method: 'methodName',
-        params: {},
-      },
-    },
-  });
-
-  expect(result).toEqual({
+  const data = await jsonrpc.call({}, {
     jsonrpc: '2.0',
     id: 100,
-    error: {
+    method: 'methodName',
+    params: {},
+  });
+
+  expect(data).toEqual({
+    jsonrpc: '2.0',
+    id: 100,
+    error: new JsonRPCFlow.JsonRPCError({
       code: -32602,
       message: 'Invalid params {}',
-    },
+    }),
   });
 });
 
 test('call ThrowError', async () => {
-  const result = await jsonrpc.call({
-    request: {
-      body: {
-        jsonrpc: '2.0',
-        id: 100,
-        method: 'methodName',
-        params: [],
-      },
-    },
-  });
-
-  expect(result).toEqual({
+  const data = await jsonrpc.call({}, {
     jsonrpc: '2.0',
     id: 100,
-    error: {
+    method: 'methodName',
+    params: [],
+  });
+
+  expect(data).toEqual({
+    jsonrpc: '2.0',
+    id: 100,
+    error: new JsonRPCFlow.JsonRPCError({
       code: -32000,
       message: 'errorMessage',
-    },
+    }),
   });
+});
+
+test('methodFlow', async () => {
+  const flow = jsonrpc.methodFlow('methodName');
+
+  const result = await flow({ a: 1 });
+
+  expect(result).toEqual([{ a: 1 }]);
+});
+
+test('methodFlow Error', async () => {
+  const flow = jsonrpc.methodFlow('methodName');
+
+  const error = await flow().catch(e => e);
+
+  expect(error).toEqual(new JsonRPCFlow.JsonRPCError({
+    code: -32000,
+    message: 'errorMessage',
+  }));
 });

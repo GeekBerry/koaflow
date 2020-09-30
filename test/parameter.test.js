@@ -22,31 +22,24 @@ test('normal', () => {
 });
 
 test('miss required', () => {
-  expect(() =>
-    func({ query: { page: '1' } }),
-  ).toThrow('"id" is required');
+  expect(() => func({ query: { page: '1' } })).toThrow('"id" is required');
 });
 
 test('error enum', () => {
-  expect(() =>
-    func({ id: 4 }),
+  expect(() => func({ id: 4 }),
   ).toThrow('"id" do not match enum');
 });
 
 test('error condition', () => {
-  expect(() =>
-    func({
-      id: 1,
-      query: { page: 0 },
-    }),
-  ).toThrow('"query.page" do not match condition "bigger then 0"');
+  expect(() => func({
+    id: 1,
+    query: { page: 0 },
+  })).toThrow('"query.page" do not match condition "bigger then 0"');
 });
 
 test('error complicated condition', () => {
-  expect(() =>
-    func({
-      id: 1,
-      body: { title: 'title', desc: 'x' },
-    }),
-  ).toThrow('"body.desc" do not match condition "logger than title"');
+  expect(() => func({
+    id: 1,
+    body: { title: 'title', desc: 'x' },
+  })).toThrow('"body.desc" do not match condition "logger than title"');
 });

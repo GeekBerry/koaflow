@@ -1,9 +1,7 @@
 const type = require('../lib/type');
 
 test('not a function', () => {
-  expect(() =>
-    type.xxx(1),
-  ).toThrow('type.xxx is not a function');
+  expect(() => type.xxx(1)).toThrow('type.xxx is not a function');
 });
 
 test('empty to be undefined', () => {

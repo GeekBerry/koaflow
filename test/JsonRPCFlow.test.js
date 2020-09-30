@@ -2,14 +2,12 @@ const JsonRPCFlow = require('../lib/flow/JsonRPCFlow');
 
 const jsonrpc = new JsonRPCFlow();
 
-jsonrpc.method('methodName',
-  async function (params) {
-    if (!params[0]) {
-      throw new Error('errorMessage');
-    }
-    return params;
-  },
-);
+jsonrpc.method('methodName', async (params) => {
+  if (!params[0]) {
+    throw new Error('errorMessage');
+  }
+  return params;
+});
 
 test('call', async () => {
   const data = await jsonrpc.call({}, {

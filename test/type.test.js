@@ -1,5 +1,12 @@
 const type = require('../lib/type');
 
+test('$default', () => {
+  type.default = type.any.$default(null);
+
+  expect(type.default()).toEqual(null);
+  expect(type.default(true)).toEqual(true);
+});
+
 test('not a function', () => {
   expect(() => type.xxx(1)).toThrow('type.xxx is not a function');
 });
@@ -80,7 +87,7 @@ test('str', () => {
 });
 
 test('str not accept empty', () => {
-  expect(() => type.str('')).toThrow('do not match "validator"');
+  expect(() => type.str('')).toThrow('do not match "str"');
 });
 
 // ----------------------------------------------------------------------------
@@ -108,21 +115,29 @@ test('num accept hex', () => {
   expect(type.num('0xff')).toEqual(255);
 });
 
+test('num empty', () => {
+  expect(() => type.num('')).toThrow('do not match "isFinite"');
+});
+
 // ----------------------------------------------------------------------------
 test('integer', () => {
   expect(type.integer(123)).toEqual(123);
 });
 
 test('integer not accept string', () => {
-  expect(() => type.integer('100')).toThrow('do not match "isSafeInteger"');
+  expect(() => type.integer('100')).toThrow('do not match "isInteger"');
 });
 
 test('integer not accept float', () => {
-  expect(() => type.integer(3.14)).toThrow('do not match "isSafeInteger"');
+  expect(() => type.integer(3.14)).toThrow('do not match "isInteger"');
 });
 
 test('int', () => {
   expect(type.int('123')).toEqual(123);
+});
+
+test('int empty', () => {
+  expect(() => type.int('')).toThrow('do not match "isInteger"');
 });
 
 // ----------------------------------------------------------------------------
@@ -177,6 +192,7 @@ test('hex prefix', () => {
 });
 
 test('json', () => {
+  expect(type.json('null')).toEqual('null');
   expect(type.json('{"name":"Tom"}')).toEqual('{"name":"Tom"}');
 });
 
@@ -196,16 +212,17 @@ test('$or', () => {
   expect(() => func(true)).toThrow('do not match "isNull"');
 });
 
-test('$array', () => {
-  const func = type.arr.$array(type.int);
+test('arr', () => {
+  const func = type([type.int]).$parse(type.arr);
 
   expect(func('1,0xa')).toEqual([1, 10]);
-  expect(() => func([1, 3.14])).toThrow('do not match "isSafeInteger"');
+  expect(() => func([1, 3.14])).toThrow('do not match "isInteger"');
 });
 
-test('$object', () => {
-  const func = type.$object({ a: type.int, b: type.bool });
+test('obj', () => {
+  const func = type({ a: type.int, b: type.bool }, { skip: true, pick: true }).$parse(type.obj);
 
   expect(func({ a: '0xa', c: 'string' })).toEqual({ a: 10 });
+  expect(func('{"a":"0xa","c":"string"}')).toEqual({ a: 10 });
   expect(() => func({ b: 1 })).toThrow('do not match "isBoolean"');
 });

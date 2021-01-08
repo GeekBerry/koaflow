@@ -4,13 +4,14 @@
   "description": "koa app extend",
   "author": "geekberry@qq.com",
   "license": "MIT",
-  "main": "index.js",
+  "repository": "https://github.com/GeekBerry/koaflow.git",
   "keywords": [
     "koa",
     "web",
     "api",
     "router"
   ],
+  "main": "index.js",
   "files": [
     "lib",
     "src",

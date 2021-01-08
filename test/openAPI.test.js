@@ -24,7 +24,10 @@ test('openapi', () => {
         id: { in: 'path', type: 'integer', required: true },
       },
       output: {
-        id: 'integer',
+        200: {
+          id: 'integer',
+        },
+        500: undefined,
       },
     }),
   );

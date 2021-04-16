@@ -9,6 +9,24 @@ jsonrpc.method('methodName', async (params) => {
   return params;
 });
 
+test('concat', async () => {
+  const jsonrpc1 = new JsonRPCFlow();
+  jsonrpc1.method('a', () => 'A');
+
+  const jsonrpc2 = new JsonRPCFlow();
+  jsonrpc2.method('b', () => 'B');
+
+  const jsonrpc3 = new JsonRPCFlow();
+  jsonrpc3.method('b', () => 'B');
+
+  const concat = JsonRPCFlow.concat(jsonrpc1, jsonrpc2);
+  expect(await concat.methods.a()).toEqual('A');
+  expect(await concat.methods.b()).toEqual('B');
+
+  expect(() => JsonRPCFlow.concat(jsonrpc2, () => undefined)).toThrow('not instanceof JsonRPCFlow');
+  expect(() => JsonRPCFlow.concat(jsonrpc2, jsonrpc3)).toThrow('already exist method');
+});
+
 test('call', async () => {
   const data = await jsonrpc.call({}, {
     jsonrpc: '2.0',

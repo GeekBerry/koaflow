@@ -127,16 +127,16 @@ test('call ThrowError', async () => {
   });
 });
 
-test('methodFlow', async () => {
-  const flow = jsonrpc.methodFlow('methodName');
+test('flow', async () => {
+  const flow = jsonrpc.flow('methodName');
 
   const result = await flow({ a: 1 });
 
   expect(result).toEqual([{ a: 1 }]);
 });
 
-test('methodFlow Error', async () => {
-  const flow = jsonrpc.methodFlow('methodName');
+test('flow Error', async () => {
+  const flow = jsonrpc.flow('methodName');
 
   const error = await flow().catch(e => e);
 

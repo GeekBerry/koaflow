@@ -9,6 +9,18 @@ jsonrpc.method('methodName', async (params) => {
   return params;
 });
 
+jsonrpc.decorate(async function (options, next) {
+  try {
+    console.log('IN', this.method);
+    const result = await next(options);
+    console.log('OUT', this.method);
+    return result;
+  } catch (e) {
+    console.log(e);
+    throw e;
+  }
+});
+
 test('concat', async () => {
   const jsonrpc1 = new JsonRPCFlow();
   jsonrpc1.method('a', () => 'A');
@@ -130,7 +142,13 @@ test('call ThrowError', async () => {
 test('flow', async () => {
   const flow = jsonrpc.flow('methodName');
 
-  const result = await flow({ a: 1 });
+  const result = await flow([{ a: 1 }]);
+
+  expect(result).toEqual([{ a: 1 }]);
+});
+
+test('func', async () => {
+  const result = await jsonrpc.func('methodName')({ a: 1 });
 
   expect(result).toEqual([{ a: 1 }]);
 });
@@ -138,7 +156,16 @@ test('flow', async () => {
 test('flow Error', async () => {
   const flow = jsonrpc.flow('methodName');
 
-  const error = await flow().catch(e => e);
+  const error = await flow([]).catch(e => e);
+
+  expect(error).toEqual(new JsonRPCFlow.JsonRPCError({
+    code: -32000,
+    message: 'errorMessage',
+  }));
+});
+
+test('func Error', async () => {
+  const error = await jsonrpc.func('methodName')().catch(e => e);
 
   expect(error).toEqual(new JsonRPCFlow.JsonRPCError({
     code: -32000,

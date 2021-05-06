@@ -16,6 +16,7 @@ module.exports = {
   },
   rules: {
     'arrow-parens': 0,
+    'class-methods-use-this': 0,
     'func-names': 0, // for router
     'function-paren-newline': 0,
     'linebreak-style': 0, // for Windows

@@ -1,5 +1,5 @@
 const Koaflow = require('../index');
-const loadConfig = require('../lib/util/loadConfig');
+const loadConfig = require('../lib/loadConfig');
 // const jsonError = require('../lib/middleware/jsonError');
 const requestId = require('../lib/middleware/requestId');
 const requestLogger = require('../lib/middleware/requestLogger');

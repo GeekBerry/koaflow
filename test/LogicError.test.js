@@ -1,4 +1,4 @@
-const LogicErrorTest = require('../lib/util/LogicError');
+const LogicErrorTest = require('../lib/LogicError');
 
 test('extend LogicError', () => {
   const XError = LogicErrorTest.extend({ code: 1001, stack: 'stack' });

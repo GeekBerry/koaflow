@@ -1,4 +1,4 @@
-const loadConfig = require('../lib/util/loadConfig');
+const loadConfig = require('../lib/loadConfig');
 
 test('config', () => {
   const config = loadConfig(`${__dirname}/__mock__/config`);

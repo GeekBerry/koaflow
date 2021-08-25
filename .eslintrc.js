@@ -22,6 +22,7 @@ module.exports = {
     'linebreak-style': 0, // for Windows
     'max-classes-per-file': 0,
     'max-len': 0, // for doc
+    'no-await-in-loop': 0,
     'no-restricted-syntax': 0, // async for loop
     'no-param-reassign': 0,
     'no-underscore-dangle': 0, // _xxx for protected
